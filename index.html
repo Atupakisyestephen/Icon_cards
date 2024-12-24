@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Icon Cards</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to Your Digital Invitation Platform</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>About the Platform</h2>
+            <p>This platform helps you check invitations for weddings, birthdays, and other ceremonies.</p>
+        </section>
+
+        <section>
+            <h2>Send Invitations</h2>
+            <form id="invitationForm">
+                <label for="fileUpload">Upload Excel File:</label>
+                <input type="file" id="fileUpload" accept=".xlsx, .xls" />
+                <button type="button" id="sendInvitations">Send Invitations</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your The Icons. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script> <!-- SheetJS Library -->
+    <script>
+        document.getElementById('sendInvitations').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileUpload');
+            if (!fileInput.files.length) {
+                alert('Please upload an Excel file.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+
+                if (jsonData.length === 0) {
+                    alert('The uploaded file is empty or has no data.');
+                    return;
+                }
+
+                let index = 0;
+
+                const sendWhatsAppMessage = () => {
+                    if (index >= jsonData.length) {
+                        alert('All invitations have been sent!');
+                        return;
+                    }
+
+                    const entry = jsonData[index];
+                    const phone = entry.Phone; // Assuming column header is 'Phone'
+                    const name = entry.Name;   // Assuming column header is 'Name'
+
+                    if (phone) {
+                        const message = `Hi ${name}, you're invited to our event!`;
+                        const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappLink, '_blank');
+                    }
+
+                    index++;
+                    setTimeout(sendWhatsAppMessage, 2000); // 2-second delay between messages
+                };
+
+                sendWhatsAppMessage();
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+</html>
+
