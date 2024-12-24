@@ -5,20 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Icon Cards</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#send-invitations">Send Invitations</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
         <h1>Welcome to Your Digital Invitation Platform</h1>
     </header>
 
     <main>
-        <section>
+
+        <section id="about">
             <h2>About the Platform</h2>
             <p>This platform helps you check invitations for weddings, birthdays, and other ceremonies.</p>
         </section>
 
-        <section>
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>We provide a seamless way to manage your invitations and ensure your guests are notified promptly.</p>
+        </section>
+
+        <section id="send-invitations">
             <h2>Send Invitations</h2>
             <form id="invitationForm">
                 <label for="fileUpload">Upload Excel File:</label>
@@ -26,6 +43,12 @@
                 <button type="button" id="sendInvitations">Send Invitations</button>
             </form>
         </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or need support, please feel free to contact us at <a href="mailto:support@invitationplatform.com">support@theicon.com</a>.</p>
+        </section>
+
     </main>
 
     <footer>
@@ -85,4 +108,3 @@
     </script>
 </body>
 </html>
-
